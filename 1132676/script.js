@@ -5,18 +5,18 @@ const btnReset = document.getElementById('reset');
 const turnEl = document.getElementById('turn');
 const stateEl = document.getElementById('state');
 
-// 計分板元素 (Improvement)
+// 計分板元素
 const scoreXEl = document.getElementById('score-x');
 const scoreOEl = document.getElementById('score-o');
 const scoreDrawEl = document.getElementById('score-draw');
-const btnResetAll = document.getElementById('reset-all'); // 新增重置計分按鈕
+const btnResetAll = document.getElementById('reset-all'); 
 
 // 遊戲狀態變數
 let board;     // 儲存 9 格的內容（'X', 'O', ‘’）
 let current;   // 目前輪到誰下棋
 let active;    // 遊戲是否進行中
 
-// 計分用變數 (Improvement)
+// 計分用變數
 let scoreX = 0;
 let scoreO = 0;
 let scoreDraw = 0;
@@ -27,6 +27,13 @@ const WIN_LINES = [
     [0,3,6],[1,4,7], [2,5,8], // cols
     [0,4,8],[2,4,6]           // diags
 ];
+
+// 更新計分板數字
+function updateScoreboard(){
+    scoreXEl.textContent = scoreX;
+    scoreOEl.textContent = scoreO;
+    scoreDrawEl.textContent = scoreDraw;
+}
 
 // 起始函式
 function init(){
@@ -40,13 +47,6 @@ function init(){
     });
     turnEl.textContent = current;
     stateEl.textContent = '';
-}
-
-// 更新計分板數字 (Improvement)
-function updateScoreboard(){
-    scoreXEl.textContent = scoreX;
-    scoreOEl.textContent = scoreO;
-    scoreDrawEl.textContent = scoreDraw;
 }
 
 // 下手
@@ -90,14 +90,14 @@ function endGame({winner, line}){
     if(winner){
         stateEl.textContent = `${winner} 勝利！`;
         line.forEach(i=> cells[i].classList.add('win'));
-        // 更新分數 (Improvement)
+        // 更新分數
         if(winner==='X') scoreX++; else scoreO++;
     }else{
         stateEl.textContent = '平手';
-        // 更新分數 (Improvement)
+        // 更新分數
         scoreDraw++;
     }
-    // 更新計分板 (Improvement)
+    // 更新計分板
     updateScoreboard(); 
     cells.forEach(c=> c.disabled = true);
 }
@@ -113,7 +113,7 @@ cells.forEach(cell=>{
 // 綁定事件：重開遊戲（保留分數）
 btnReset.addEventListener('click', init);
 
-// 綁定事件：重置計分（連同遊戲）(Improvement)
+// 綁定事件：重置計分（連同遊戲）
 btnResetAll.addEventListener('click', ()=>{
     scoreX = scoreO = scoreDraw = 0;
     updateScoreboard();
