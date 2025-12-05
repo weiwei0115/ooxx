@@ -1,18 +1,24 @@
 /* 顏色變數設定 */
 :root{
-    --bg: #0f1226;
-    --text: #e7e8ee;
-    --x: #ff6b6b;
-    --o: #4dd0el;
-    --win: #ffe066;
+    --bg: #0f1226; /* 背景色 */
+    --text: #e7e8ee; /* 文字色 */
+    --x: #ff6b6b; /* X 顏色 */
+    --o: #4dd0el; /* O 顏色 */
+    --win: #ffe066; /* 勝利顏色 */
 }
 
 /* 基本設定 */
 *{box-sizing:border-box}
 html,body{height:100%;}
 body{
-    margin:0; font-family: 'Noto Sans TC', system-ui, -apple-system, sans-serif;
-    background:var(--bg); color:var(--text); display:grid; place-items:center; padding:24px;
+    margin:0; 
+    font-family: 'Noto Sans TC', system-ui, -apple-system, sans-serif;
+    /* 核心樣式：深色背景，置中內容 */
+    background:var(--bg); 
+    color:var(--text); 
+    display:grid; 
+    place-items:center; 
+    padding:24px;
 }
 .container{ width: min(720px, 96%); text-align:center; }
 h1{ margin:0 0 16px 0; font-size:24px; }
@@ -20,22 +26,31 @@ h1{ margin:0 0 16px 0; font-size:24px; }
 
 /* 棋盤佈局 */
 .board{
-    display:grid; grid-template-columns: repeat(3, 1fr); gap:12px;
+    /* 核心樣式：3x3 網格佈局 */
+    display:grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap:12px;
     background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
     padding: 12px; border-radius: 14px; width:min(560px, 92%); aspect-ratio:1/1;
 }
 
 /* 棋盤格樣式 */
 .cell{
-    border-radius:10px; background:linear-gradient(180deg, #121430,#0e1030); border:1px solid rgba(255,255,255,0.03);
-    font-size:48px; font-weight:800; display:grid; place-items:center;
-    cursor:pointer; user-select:none; -webkit-tap-highlight-color:transparent;
+    border-radius:10px; 
+    background:linear-gradient(180deg, #121430,#0e1030); 
+    border:1px solid rgba(255,255,255,0.03);
+    font-size:48px; 
+    font-weight:800; 
+    display:grid; place-items:center;
+    cursor:pointer; 
+    user-select:none; 
+    -webkit-tap-highlight-color:transparent;
 }
 .cell.x{ color:var(--x); }
 .cell.o{ color:var(--o); }
 .cell.win{ background:var(--win); color:#000; }
 
-/* 計分板樣式 (Improvement) */
+/* 計分板樣式 */
 .scoreboard{ margin-top:16px; text-align:left; display:inline-block; }
 .scoreboard h2{ margin-bottom:8px; font-size:18px; }
 
