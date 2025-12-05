@@ -1,15 +1,18 @@
-/* 顏色變數設定 */
+/* 顏色變數設定 - 調整部分顏色讓視覺更協調 */
 :root{
-    --bg: #0f1226; /* 背景色 */
-    --text: #e7e8ee; /* 文字色 */
-    --x: #ff6b6b; /* X 顏色 */
-    --o: #4dd0el; /* O 顏色 */
-    --win: #ffe066; /* 勝利顏色 */
+    --bg: #0d1117;          /* 更深邃的背景色 (接近 GitHub 暗色主題) */
+    --panel: #161b22;       /* 面板背景色 */
+    --text: #c9d1d9;        /* 淺灰色文字 */
+    --x: #ff6b6b;           /* X 顏色 (紅色系) */
+    --o: #58a6ff;           /* O 顏色 (亮藍色系，比原版更鮮明) */
+    --win: #ffde5c;         /* 勝利顏色 (更飽和的黃色) */
+    --shadow: rgba(0,0,0,0.4);
+    --border-color: rgba(255, 255, 255, 0.1); /* 淺邊框 */
 }
 
 /* 基本設定 */
 *{box-sizing:border-box}
-html,body{height:100%;}
+html, body{height:100%;}
 body{
     margin:0; 
     font-family: 'Noto Sans TC', system-ui, -apple-system, sans-serif;
@@ -19,43 +22,124 @@ body{
     display:grid; 
     place-items:center; 
     padding:24px;
+    /* 輕微的整體陰影，增強立體感 */
+    box-shadow: inset 0 0 200px var(--shadow); 
 }
-.container{ width: min(720px, 96%); text-align:center; }
-h1{ margin:0 0 16px 0; font-size:24px; }
-.status{ margin-bottom: 12px; }
+.container{ 
+    width: min(720px, 96%); 
+    text-align:center; 
+    padding: 24px;
+    border-radius: 16px;
+    background: var(--panel); /* 使用面板色作為容器背景 */
+    box-shadow: 0 10px 30px var(--shadow); /* 容器陰影 */
+}
+
+h1{ 
+    margin:0 0 24px 0; /* 增加標題下方間距 */
+    font-size:32px; 
+    color: var(--win); /* 讓標題顏色更亮眼 */
+    text-shadow: 0 0 8px rgba(255, 222, 92, 0.5);
+}
+.status{ 
+    margin-bottom: 20px; /* 增加間距 */
+    font-size: 1.1em;
+}
 
 /* 棋盤佈局 */
 .board{
-    /* 核心樣式：3x3 網格佈局 */
     display:grid; 
     grid-template-columns: repeat(3, 1fr); 
-    gap:12px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    padding: 12px; border-radius: 14px; width:min(560px, 92%); aspect-ratio:1/1;
+    gap:16px; /* 增加棋盤格間隙 */
+    background: var(--bg); /* 棋盤內部用更深的背景色 */
+    padding: 16px; 
+    border-radius: 18px; /* 讓邊角更圓潤 */
+    width:min(560px, 92%); 
+    aspect-ratio:1/1;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 5px 15px rgba(0,0,0,0.6); /* 內外陰影 */
 }
 
 /* 棋盤格樣式 */
 .cell{
-    border-radius:10px; 
-    background:linear-gradient(180deg, #121430,#0e1030); 
-    border:1px solid rgba(255,255,255,0.03);
-    font-size:48px; 
-    font-weight:800; 
-    display:grid; place-items:center;
+    border-radius:12px; /* 圓角比棋盤大一些 */
+    /* 背景使用簡單的面板色，並加入陰影 */
+    background: var(--panel); 
+    border: 1px solid var(--border-color);
+    font-size:60px; /* 讓 X/O 更大 */
+    font-weight:900; 
+    display:grid; 
+    place-items:center;
     cursor:pointer; 
     user-select:none; 
-    -webkit-tap-highlight-color:transparent;
+    transition: background 0.2s, transform 0.1s; /* 加入過渡效果 */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5); /* 立體陰影 */
 }
-.cell.x{ color:var(--x); }
-.cell.o{ color:var(--o); }
-.cell.win{ background:var(--win); color:#000; }
+
+/* 滑鼠懸停效果 */
+.cell:not(:disabled):hover{
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-2px); /* 輕微上浮 */
+}
+
+.cell.x{ color:var(--x); text-shadow: 0 0 10px var(--x); } /* 加入文字陰影 */
+.cell.o{ color:var(--o); text-shadow: 0 0 10px var(--o); } /* 加入文字陰影 */
+
+.cell.win{ 
+    background:var(--win); 
+    color:#000;
+    /* 勝利時發光效果 */
+    box-shadow: 0 0 20px var(--win), inset 0 0 10px rgba(0,0,0,0.5); 
+}
 
 /* 計分板樣式 */
-.scoreboard{ margin-top:16px; text-align:left; display:inline-block; }
-.scoreboard h2{ margin-bottom:8px; font-size:18px; }
+.scoreboard{ 
+    margin-top:24px; /* 增加與棋盤間距 */
+    text-align:left; 
+    display:inline-block; 
+    padding: 15px 30px;
+    background: var(--panel);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+}
+.scoreboard h2{ 
+    margin-bottom:12px; 
+    font-size:1.2em;
+    color: var(--text);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 5px;
+}
 
 /* 控制按鈕樣式 */
-.controls{ margin-top:12px; }
-button{ padding:8px 12px; border-radius:10px; border:0; background:#21264a; color:var(--text);
-    cursor:pointer; }
-button:disabled{ opacity:.5; cursor:not-allowed; }
+.controls{ 
+    margin-top:24px; /* 增加間距 */
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+button{ 
+    padding:10px 18px; 
+    border-radius:12px; /* 增加圓角 */
+    border:0; 
+    background:#2f3640; /* 使用更柔和的深色按鈕背景 */
+    color:var(--text);
+    font-weight: 600;
+    cursor:pointer;
+    transition: background 0.2s, transform 0.1s;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+}
+
+button:hover{
+    background: #404b5a; /* 懸停時顏色變淺 */
+    transform: translateY(-1px);
+}
+button:active{
+    transform: translateY(1px);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.5); /* 點擊時陰影變小 */
+}
+
+button:disabled{ 
+    opacity:.4; 
+    cursor:not-allowed;
+    transform: none;
+    box-shadow: none;
+}
